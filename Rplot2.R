@@ -1,0 +1,8 @@
+household_power_consumption$Date <- as.Date(household_power_consumption$Date, format="%d/%m/%Y")
+mydata<-subset(household_power_consumption, Date == as.Date("2007-02-01") | Date == as.Date("2007-02-02"))
+newdatetime <- within(mydata, { timestamp=format(as.POSIXct(paste(Date, Time)), "%Y-%m-%d %H:%M:%S") })
+newdatetime$date_time <- strptime(newdatetime$timestamp, format="%Y-%m-%d %H:%M:%S")
+attach(newdatetime)
+png(file="Rplot2.png",width=480,height=480)
+plot(date_time,Global_active_power, type="l", xlab="", ylab="Global Active Power (kilowatts)")
+dev.off()
